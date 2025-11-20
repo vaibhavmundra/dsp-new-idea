@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
           </noscript>
           {children}
         </body>
-        <GoogleAnalytics gaId="G-SGRJQ05KHE" />
+        <GoogleAnalytics gaId="G-GLJQTML75Z" />
       </html>
       <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Script
