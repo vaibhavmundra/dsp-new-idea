@@ -1,0 +1,293 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .font-thin {
+    font-variation-settings: "wght" 100;
+  }
+  .font-extralight {
+    font-variation-settings: "wght" 200;
+  }
+  .font-light {
+    font-variation-settings: "wght" 300;
+  }
+  .font-normal {
+    font-variation-settings: "wght" 400;
+  }
+  .font-medium {
+    font-variation-settings: "wght" 500;
+  }
+  .font-semibold {
+    font-variation-settings: "wght" 600;
+  }
+  .font-bold {
+    font-variation-settings: "wght" 700;
+  }
+  .font-extrabold {
+    font-variation-settings: "wght" 800;
+  }
+  .font-black {
+    font-variation-settings: "wght" 900;
+  }
+}
+
+@font-face {
+  font-family: "Neue Montreal";
+  src: url("./font/montreal.ttf") format("truetype"); /* Adjust the path and format as needed */
+  font-weight: 100 900; /* Adjust the weight range */
+  font-stretch: 75% 125%; /* Adjust the stretch range */
+  font-style: normal;
+}
+@font-face {
+  font-family: "Editorial New";
+  src: url("./font/editorial.ttf") format("truetype"); /* Adjust the path and format as needed */
+  font-weight: 100 900; /* Adjust the weight range */
+  font-stretch: 75% 125%; /* Adjust the stretch range */
+  font-style: normal;
+}
+@font-face {
+  font-family: "Writer";
+  src: url("./font/writer.ttf") format("truetype"); /* Adjust the path and format as needed */
+  font-weight: 100 900; /* Adjust the weight range */
+  font-stretch: 75% 125%; /* Adjust the stretch range */
+  font-style: normal;
+}
+@font-face {
+  font-family: "Eiko";
+  src: url("./font/eiko.ttf") format("truetype"); /* Adjust the path and format as needed */
+  font-weight: 100 900; /* Adjust the weight range */
+  font-stretch: 75% 125%; /* Adjust the stretch range */
+  font-style: normal;
+}
+@font-face {
+  font-family: "Denton";
+  src: url("./font/denton.ttf") format("truetype"); /* Adjust the path and format as needed */
+  font-weight: 100 900; /* Adjust the weight range */
+  font-stretch: 75% 125%; /* Adjust the stretch range */
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-variation-settings: "wght" 300;
+}
+
+.dsp-reveal {
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(
+    135deg,
+    #fff 200%,
+    #ef663c 300%,
+    #6161f5 500%
+  );
+  background-repeat: no-repeat;
+  position: relative;
+  z-index: 1;
+}
+
+.grey-reveal {
+  background-clip: text;
+  color: transparent;
+  background-image: linear-gradient(
+    90deg,
+    #fff -200%,
+    #545454 -180%,
+    #545454 100%
+  );
+}
+
+/* Setting some properties from an answer I found on SO to make Safari gradients work properly */
+.blur-3xl {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  /* -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0); */
+}
+
+.react-player > div {
+  position: absolute;
+  top: 0;
+  border-radius: 1rem;
+}
+
+.course-leave-div {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 16px;
+}
+.course-leave-div > button {
+  margin-left: 8px;
+}
+
+/* Recording animation starts */
+.recorder-container {
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  box-shadow: 0px 0px 3px 2px #bdc3c7;
+  transition: 0.3s all ease-in;
+  position: relative;
+}
+.icon-microphone {
+  color: #fff;
+  font-size: 50px;
+  line-height: 150px;
+  display: block;
+  text-align: center;
+  transition: 0.1s all ease-in;
+  position: relative;
+}
+
+.outer-2 {
+  width: 10px;
+  height: 10px;
+  transform: scale(1);
+  border-radius: 100%;
+  position: absolute;
+  background-color: #aaa;
+  z-index: -1;
+  transition: 1.5s all ease;
+  animation: woong-2 1.5s infinite;
+  animation-delay: 2.5s;
+}
+
+@keyframes woong {
+  0% {
+    transform: scale(1.2);
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+@keyframes woong-2 {
+  0% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+  50% {
+    transform: scale(1.6);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+/* Recording animation ends */
+
+/* Loading animation css begins */
+.lds-grid {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-grid div {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: theme("colors.white");
+  animation: lds-grid 1.2s linear infinite;
+}
+.lds-grid div:nth-child(1) {
+  top: 8px;
+  left: 8px;
+  animation-delay: 0s;
+}
+.lds-grid div:nth-child(2) {
+  top: 8px;
+  left: 32px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(3) {
+  top: 8px;
+  left: 56px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(4) {
+  top: 32px;
+  left: 8px;
+  animation-delay: -0.4s;
+}
+.lds-grid div:nth-child(5) {
+  top: 32px;
+  left: 32px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(6) {
+  top: 32px;
+  left: 56px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(7) {
+  top: 56px;
+  left: 8px;
+  animation-delay: -0.8s;
+}
+.lds-grid div:nth-child(8) {
+  top: 56px;
+  left: 32px;
+  animation-delay: -1.2s;
+}
+.lds-grid div:nth-child(9) {
+  top: 56px;
+  left: 56px;
+  animation-delay: -1.6s;
+}
+@keyframes lds-grid {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Loading animation css ends */
+
+@layer base {
+  /* Works on Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: theme("colors.fullBlack") theme("colors.lightGrey");
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: theme("colors.fullBlack");
+    border-left: 0.5px solid theme("colors.borderGrey");
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: theme("colors.lightGrey");
+    border-radius: 20px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+.course-page {
+  height: 100vh;
+  position: fixed;
+}
