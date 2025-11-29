@@ -18,6 +18,7 @@
     "@next/mdx": "^14.2.7",
     "@next/third-parties": "^14.1.3",
     "@react-email/components": "^0.0.25",
+    "@shapediver/viewer": "^3.14.10",
     "@supabase/auth-helpers-nextjs": "^0.8.1",
     "@supabase/supabase-js": "^2.33.2",
     "@types/mdx": "^2.0.13",
