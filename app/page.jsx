@@ -16,7 +16,7 @@ export default async function Index() {
             <div className="bg-black/30 backdrop-blur-[10px] p-10 md:rounded-md rounded-none rounded-t-xl border border-white/50 md:my-10">
               <h1 className="md:text-6xl text-4xl mb-8 md:mb-32 text-white font-normal">Furniture that <span className={`${denton.variable} font-denton`}>fits your life.</span> Not the other way around.</h1>
               <div className=" flex justify-start">
-              <Link href="/login" className="uppercase px-6 md:px-8 h-12 bg-primary rounded-full text-sm text-white hover:bg-white hover:text-primary transition-all duration-200 relative z-10 disabled:bg-lightGrey flex flex-row items-center"><p className=" mr-2">Start customising</p> <ArrowRightIcon className="w-4 h-4"/></Link>
+              <Link href="/products/wardrobe" className="uppercase px-6 md:px-8 h-12 bg-primary rounded-full text-sm text-white hover:bg-white hover:text-primary transition-all duration-200 relative z-10 disabled:bg-lightGrey flex flex-row items-center"><p className=" mr-2">Start customising</p> <ArrowRightIcon className="w-4 h-4"/></Link>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@ export default async function Index() {
           <div className="bg-black/30 backdrop-blur-[10px] p-10 rounded-md border border-white/50 my-20">
             <h1 className="md:text-6xl text-5xl mb-8 text-white font-normal"><span className={`${denton.variable} font-denton`}>Made to fit.</span> Made to stay. Made simple.</h1>
             <div className=" flex justify-start">
-              <Link href="/login" className=" uppercase px-6 md:px-8 h-12 bg-primary rounded-full text-sm text-white hover:bg-white hover:text-primary transition-all duration-200 relative z-10 disabled:bg-lightGrey flex flex-row items-center"><p className=" mr-2">Start customising</p> <ArrowRightIcon className="w-4 h-4"/></Link>
+              <Link href="/products/wardrobe" className=" uppercase px-6 md:px-8 h-12 bg-primary rounded-full text-sm text-white hover:bg-white hover:text-primary transition-all duration-200 relative z-10 disabled:bg-lightGrey flex flex-row items-center"><p className=" mr-2">Start customising</p> <ArrowRightIcon className="w-4 h-4"/></Link>
             </div>
           </div>
         </div>

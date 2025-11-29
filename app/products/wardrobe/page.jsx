@@ -2,7 +2,10 @@
 
 import DropOpen from "@/app/components/modular-furniture/dropopen";
 import Parameter from "@/app/components/modular-furniture/parameter";
+import { AdjustmentsVerticalIcon, InformationCircleIcon, QueueListIcon, Square3Stack3DIcon, SwatchIcon } from "@heroicons/react/24/outline";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+
 // https://sdr8euc1.eu-central-1.shapediver.com
 const SHAPEDIVER_ENABLED =
   process.env.NEXT_PUBLIC_SHAPEDIVER_ENABLED === "true";
@@ -37,24 +40,24 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
   //All shapediver params
   //All shapediver params
   //All shapediver params
-  const [width,setWidth] = useState(48);
+  const [width,setWidth] = useState(36);
   const [height,setHeight] = useState(96);
   const [depth,setDepth] = useState(24);
-  const [baseType,setBaseType] = useState("drawers");
+  const [baseType,setBaseType] = useState("shelves");
   const [baseDiv,setBaseDiv] = useState(2);
-  const[drawersDiv,setDrawersDiv]=useState("1 drawer");
+  const[drawersDiv,setDrawersDiv]=useState("1");
   const[color,setColor]=useState(color_cosmos[0]);
   const[showShutter,setShowShutter]=useState(false);
-  const[openWhich,setOpenWhich]=useState(1);
+  const[openWhich,setOpenWhich]=useState(null);
   //All shapediver params
   //All shapediver params
   //All shapediver params
 
-  const[price,setPrice]=useState(null);
+  const[price,setPrice]=useState("Calculating...");
   const allParams =useRef();
   const[sdLoading,setSdLoading]=useState(true);
-  // Example UI state for one parameter (e.g. "Width")
-  const [params, setParams] = useState("");
+  const router = useRouter();
+
 
   const [screenSize, setScreenSize] = useState({ width: 0, height: 0 });
 
@@ -63,6 +66,9 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
       width: window.innerWidth,
       height: window.innerHeight,
     });
+    if(window.innerWidth>500){
+      setOpenWhich(1);
+    }
   }, []); 
 
   
@@ -105,6 +111,7 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
 
         console.log("Init updation");
         await updateSD();
+        updatePrice();
         setSdLoading(false);
       } catch (err) {
         console.error("Error initializing ShapeDiver viewer:", err);
@@ -135,14 +142,22 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
     };
   }, [ticket, modelViewUrl]);
 
-  useEffect(()=>{
-    setPrice(49999)
-  },[])
 
   useEffect(()=>{
     "Updating everything!"
      updateSD();
+     updatePrice();
   },[width,height,depth,baseType,baseDiv,drawersDiv,color,showShutter])
+
+  function updatePrice(){
+    const depth_multiple = 1500 + ((depth - 18)*50);
+     const carcass_price = ((width*height)/144)*depth_multiple;
+     const drawer_multiple = 1 + (drawersDiv==="2"?1:0) + (baseType==="drawers"?Number(baseDiv):0);
+     const drawer_pricing = drawer_multiple*3000;
+     const final_price = carcass_price+drawer_pricing;
+     console.log("Updating pricing>>",carcass_price,drawer_multiple,drawer_pricing,final_price);
+     setPrice(final_price);
+  }
 
   async function updateSD(){
     const new_params = {
@@ -155,7 +170,7 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
           "topShelfHt":12,
           "bottomDrawers":baseType==="drawers"?true:false,
           "bottomDiv": Number(baseDiv),
-          "midDiv":drawersDiv==="2 drawers"?true:false,
+          "midDiv":drawersDiv==="2"?true:false,
           "color":color.rgb,
           "showShutters":showShutter
         }
@@ -182,22 +197,20 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
 
   return (
     <div className=" md:h-screen md:w-screen no-scrollbar md:overflow-hidden">
-      <div className=" grid grid-cols-1 md:grid-cols-3 bg-[#F1EFEE] h-full overflow-hidden">
-            <div className="m-5 p-8 bg-white rounded-lg backdrop-blur-[10px] border-borderGrey/50 md:order-1 order-2 relative">
-                <div className={`h-max-[${screenSize.height-100}px] overflow-scroll no-scrollbar`}>
-                    <DropOpen label="Dimensions" setter={setOpenWhich} current={openWhich} serial={1} showShutter={showShutter} setShowShutter={setShowShutter}>
+      <div className=" md:grid md:grid-cols-3 bg-[#F1EFEE] h-full md:overflow-hidden relative">
+            <div className="flex flex-col items-center md:m-5 md:p-8 md:bg-white rounded-lg border-borderGrey/50 md:order-1 md:relative z-10 absolute bottom-0 inset-x-0">
+                <div className={`h-max-[${screenSize.height-100}px] md:overflow-scroll no-scrollbar md:block flex w-full justify-center md:px-0 px-5 items-center gap-6`}>
+                    <DropOpen label="Dimensions" setter={setOpenWhich} current={openWhich} serial={1} showShutter={showShutter} setShowShutter={setShowShutter} icon={<AdjustmentsVerticalIcon className="w-6 h-6"/>} width={screenSize.width}>
                         <Parameter upper_lim={48} lower_lim={24} default_val={width} unit="inches" type="select" state={width} setState={setWidth} title="Width" subtitle="Minimum 24 inches. Max 48 inches" />
                         <Parameter upper_lim={96} lower_lim={72} default_val={height} unit="inches" type="select" state={height} setState={setHeight} title="Height" subtitle="Minimum 72 inches. Max 96 inches" />
                         <Parameter upper_lim={30} lower_lim={18} default_val={depth} unit="inches" type="select" state={depth} setState={setDepth} title="Depth" subtitle="Minimum 18 inches. Max 30 inches" />
                     </DropOpen>
-                    <DropOpen label="base" setter={setOpenWhich} current={openWhich} serial={2} showShutter={showShutter} setShowShutter={setShowShutter}>
+                    <DropOpen label="storage" setter={setOpenWhich} current={openWhich} serial={2} showShutter={showShutter} setShowShutter={setShowShutter} icon={<QueueListIcon className="w-6 h-6"/>} width={screenSize.width}>
                         <Parameter default_val={baseType} unit="" type="toggle" toggle_left={"drawers"} toggle_right={"shelves"} state={baseType} setState={setBaseType} title="Type" subtitle="Select a base storage type" />
                         <Parameter upper_lim={4} lower_lim={1} default_val={baseDiv} unit="" type="select" state={baseDiv} setState={setBaseDiv} title={`Number of sections`} subtitle="Minimum 1. Maximum 4" />
+                        <Parameter default_val={drawersDiv} toggle_left={'1'} toggle_right={'2'} unit="" type="toggle" state={drawersDiv} setState={setDrawersDiv} title="Number of middle drawers" subtitle="Choose between 1 or 2 lockable drawers" />
                     </DropOpen>
-                    <DropOpen label="middle" setter={setOpenWhich} current={openWhich} serial={3} showShutter={showShutter} setShowShutter={setShowShutter}>
-                        <Parameter default_val={drawersDiv} toggle_left={'1 drawer'} toggle_right={'2 drawers'} unit="" type="toggle" state={drawersDiv} setState={setDrawersDiv} title="Number of drawers" subtitle="Choose between 1 or 2 drawers" />
-                    </DropOpen>
-                    <DropOpen label="Laminate" setter={setOpenWhich} current={openWhich} serial={4} setShowShutter={setShowShutter} showShutter={showShutter}>
+                    <DropOpen label="Laminate" setter={setOpenWhich} current={openWhich} serial={3} setShowShutter={setShowShutter} showShutter={showShutter} icon={<SwatchIcon className="w-6 h-6"/>} width={screenSize.width}>
                         <div className=" flex justify-between my-8">
                           <div>
                                 <p className=" font-normal text-lg">Laminate</p>
@@ -210,7 +223,7 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
                           </div>
                         </div>
                     </DropOpen>
-                    <DropOpen label="Details" setter={setOpenWhich} current={openWhich} serial={5} showShutter={showShutter} setShowShutter={setShowShutter}>
+                    <DropOpen label="Details" setter={setOpenWhich} current={openWhich} serial={4} showShutter={showShutter} setShowShutter={setShowShutter} icon={<InformationCircleIcon className="w-6 h-6"/>} width={screenSize.width}>
                       <div className="my-8">
                         
                         <div>
@@ -240,21 +253,21 @@ export default function ShapeDiverViewer({ ticket="8519620422594c2675e5ecfdf90dd
 
                     </DropOpen>
                 </div>
-                <div className="absolute bottom-0 inset-x-0 p-8 z-10 bg-white border-t rounded-b-lg border-borderGrey/10">
+                <div className="md:absolute md:bottom-0 md:inset-x-0 md:p-8 p-5 w-full md:z-10 bg-white rounded-t-lg md:border-t md:rounded-b-lg border-borderGrey/10">
                   <div className=" mb-2">
                     <p className="uppercase text-lightGrey text-xs">total</p>
-                    <p className=" text-2xl font-medium">INR {price}</p>
+                    <p className=" text-2xl font-medium">INR {price.toLocaleString('en-IN')}</p>
                     <p className="uppercase text-lightGrey text-xs">taxes and shipping included</p>
                   </div>
                   <div>
-                    <button className="block h-12 bg-primary hover:bg-fullBlack text-white rounded-full w-full mb-2">Save & Place Order</button>
+                    <button onClick={()=>router.push('/login')} className="block h-12 bg-primary hover:bg-fullBlack text-white rounded-full w-full mb-2">Save & Place Order</button>
                   </div>
                   <div className=" flex justify-start hidden">
                     <p className=" uppercase text-lightGrey text-xs">Enter shipping address in next step</p>
                   </div>
                 </div>
             </div>
-            <div className="md:col-span-2 md:order-2 order-1">
+            <div className="md:col-span-2 md:order-2 md:h-full md:w-full h-screen w-screen ">
                 <div className="h-full w-full">
                     <canvas
                         ref={canvasRef}

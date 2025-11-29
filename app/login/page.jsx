@@ -162,7 +162,7 @@ export default function Login() {
       <div className=" grid md:grid-cols-3 h-screen w-full fixed overflow-hidden ">
         <div className="hidden md:block md:col-span-2">
           <div className="p-5 flex flex-col flex-grow w-full h-full justify-end">
-            <p className=" text-6xl font-normal text-black">Login to start making.</p>
+            <p className=" text-6xl font-normal text-black">Login to continue</p>
           </div>
         </div>
         <div className="col-span-1 border-l  border-borderGrey flex items-center px-5 w-full h-full">
@@ -255,7 +255,7 @@ export default function Login() {
                         <input
                           className="block w-full h-12 px-4 rounded-full mb-4 caret-black bg-lightGrey/10"
                           type="email"
-                          placeholder="alvaro@alvarosiza.com"
+                          placeholder="name@example.com"
                           name="email"
                           required
                         ></input>
@@ -297,7 +297,7 @@ export default function Login() {
                         <input
                           className="block w-full h-12 px-4 rounded-full text-black bg-lightGrey/10"
                           type="email"
-                          placeholder="alvaro@alvarosiza.com"
+                          placeholder="name@example.com"
                           name="email"
                           required
                         ></input>
@@ -312,7 +312,7 @@ export default function Login() {
                         <input
                           className="block w-full h-12 px-4 rounded-full text-black bg-lightGrey/10"
                           type="text"
-                          placeholder="Alvaro Siza"
+                          placeholder="Full name"
                           name="name"
                           required
                         ></input>
